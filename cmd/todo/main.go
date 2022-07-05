@@ -13,7 +13,8 @@ const (
 )
 
 func main() {
-	add := flag.Bool("add", false, "add a new todo")
+	add := flag.Bool("add", false, "add a new task")
+	complete := flag.Int("complete", 0, "mark a task as completed")
 
 	flag.Parse()
 
@@ -28,6 +29,18 @@ func main() {
 	case *add:
 		todos.Add("sample todo")
 		err := todos.Store(TODO_FILE)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err.Error())
+			os.Exit(1)
+		}
+	case *complete > 0:
+		err := todos.Complete(*complete)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err.Error())
+			os.Exit(1)
+		}
+
+		err = todos.Store(TODO_FILE)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
