@@ -16,6 +16,7 @@ func main() {
 	add := flag.Bool("add", false, "add a new task")
 	complete := flag.Int("complete", 0, "mark a task as completed")
 	del := flag.Int("del", 0, "delete a task")
+	list := flag.Bool("list", false, "list all tasks")
 
 	flag.Parse()
 
@@ -48,6 +49,7 @@ func main() {
 			fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
+	// go run ./cmd/todo -del=1
 	case *del > 0:
 		err := todos.Delete(*del)
 		if err != nil {
@@ -60,6 +62,9 @@ func main() {
 			fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
+	// go run ./cmd/todo -list
+	case *list:
+		todos.Print()
 	default:
 		fmt.Fprintln(os.Stdout, "invalid command")
 		os.Exit(0)
