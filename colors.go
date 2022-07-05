@@ -8,6 +8,7 @@ const (
 	ColorGreen   = "\x1b[32m"
 	ColorBlue    = "\x1b[94m"
 	ColorGray    = "\x1b[90m"
+	ColorYellow  = "\x1b[33m"
 )
 
 func red(s string) string {
@@ -24,4 +25,8 @@ func blue(s string) string {
 
 func gray(s string) string {
 	return fmt.Sprintf("%s%s%s", ColorGray, s, ColorDefault)
+}
+
+func yellow(s string) string {
+	return fmt.Sprintf("%s%s%s", ColorYellow, s, ColorDefault)
 }
