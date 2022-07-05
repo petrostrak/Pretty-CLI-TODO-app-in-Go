@@ -3,7 +3,6 @@ package todo
 import (
 	"encoding/json"
 	"errors"
-	"io/ioutil"
 	"os"
 	"time"
 )
@@ -54,7 +53,7 @@ func (t *Todos) Delete(index int) error {
 }
 
 func (t *Todos) Load(filename string) error {
-	file, err := ioutil.ReadFile(filename)
+	file, err := os.ReadFile(filename)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
 			return nil
@@ -72,4 +71,13 @@ func (t *Todos) Load(filename string) error {
 	}
 
 	return nil
+}
+
+func (t *Todos) Store(filename string) error {
+	data, err := json.Marshal(t)
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(filename, data, 0644)
 }
